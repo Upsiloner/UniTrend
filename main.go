@@ -24,7 +24,7 @@ func main() {
 
 	gin := gin.Default()
 
-	route.Setup(env, timeout, db, redis, SMTPClientManager, minioUtils, gin)
+	route.Setup(env, timeout, db, redis, gin)
 
 	gin.Run(env.ServerAddress)
 }

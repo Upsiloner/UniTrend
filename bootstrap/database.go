@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"log"
 
-	"UniTrend/domain/user_domain"
+	"github.com/Upsiloner/UniTrend/domain/user_domain"
 
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
