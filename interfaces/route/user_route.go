@@ -19,5 +19,5 @@ func NewLoginRouter(env *bootstrap.Env, timeout time.Duration, db *gorm.DB, rd *
 		Env:          env,
 		Redis:        rd,
 	}
-	group.POST("/api/login", lc.Login)
+	group.POST("/login", lc.Login)
 }
