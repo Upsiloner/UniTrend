@@ -1,0 +1,9 @@
+tmp
+.vscode
+
+*.exe
+*.dll
+*.test
+*.log
+
+.env
