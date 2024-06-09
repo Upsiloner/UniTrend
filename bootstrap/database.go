@@ -4,27 +4,29 @@ import (
 	"fmt"
 	"log"
 
+	"UniTrend/domain/user_domain"
+
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
 
 func NewPostgresDatabase(env *Env) *gorm.DB {
-	// 构建DSN字符串
+	// Building DSN strings
 	dsn := fmt.Sprintf("host=%s user=%s password=%s dbname=%s port=%s sslmode=disable TimeZone=Asia/Shanghai",
 		env.DBHost, env.DBUser, env.DBPass, env.DBName, env.DBPort)
 
-	// 使用Gorm开启PostgreSQL连接
+	// Enable PostgreSQL connection using Gorm
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	if err != nil {
 		log.Fatalf("Failed to connect to database: %v", err)
 	}
 
-	// 自动迁移数据库模式以确保模式是最新的
+	// Automatically migrate database schema to ensure it is up-to-date
 	if err := db.AutoMigrate(&user_domain.User{}); err != nil {
 		log.Fatalf("Failed to auto-migrate database: %v", err)
 	}
 
-	// 尝试连接，确保数据库是可达的
+	// Attempt to connect and ensure that the database is reachable
 	sqlDB, err := db.DB()
 	if err != nil {
 		log.Fatalf("Failed to get database connection: %v", err)
