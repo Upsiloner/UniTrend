@@ -8,9 +8,10 @@ import (
 )
 
 type Application struct {
-	Env      *Env
-	Postgres *gorm.DB
-	Redis    *redis.Client
+	Env               *Env
+	Postgres          *gorm.DB
+	Redis             *redis.Client
+	SMTPClientManager *SMTPClientManager
 }
 
 func App() Application {
@@ -18,6 +19,7 @@ func App() Application {
 	app.Env = NewEnv()
 	app.Postgres = NewPostgresDatabase(app.Env)
 	app.Redis = NewRedisClient(app.Env)
+	app.SMTPClientManager = NewSMTPClientManager(app.Env)
 	return *app
 }
 
@@ -35,4 +37,15 @@ func (app *Application) CloseRedisConnection() {
 	}
 
 	log.Println("Connection to PostgreSQL closed.")
+}
+
+func (app *Application) CloseSMTPClientManager() {
+	if app.SMTPClientManager == nil {
+		return
+	}
+
+	if err := app.SMTPClientManager.SMTPClose(); err != nil {
+		log.Fatalf("Failed to close SMTP connection: %v", err)
+	}
+	log.Println("Connection to SMTP server closed.")
 }

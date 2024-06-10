@@ -15,16 +15,18 @@ func main() {
 
 	db := app.Postgres
 	redis := app.Redis
+	SMTPClientManager := app.SMTPClientManager
 
 	// Deconstruction
 	defer app.CloseDBConnection()
 	defer app.CloseRedisConnection()
+	defer app.CloseSMTPClientManager()
 
 	timeout := time.Duration(env.ContextTimeout) * time.Second
 
 	gin := gin.Default()
 
-	route.Setup(env, timeout, db, redis, gin)
+	route.Setup(env, timeout, db, redis, SMTPClientManager, gin)
 
 	gin.Run(env.ServerAddress)
 }

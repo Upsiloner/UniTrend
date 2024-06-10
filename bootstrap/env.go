@@ -22,6 +22,10 @@ type Env struct {
 	RedisDB             int    `mapstructure:"REDIS_DB"`
 	TokenExpiryHour     int    `mapstructure:"TOKEN_EXPIRY_HOUR"`
 	TokenSecret         string `mapstructure:"TOKEN_SECRET"`
+	SMTPHost            string `mapstructure:"SMTP_HOST"`
+	SMTPPort            int    `mapstructure:"SMTP_PORT"`
+	SMTPUsername        string `mapstructure:"SMTP_USERNAME"`
+	SMTPPassword        string `mapstructure:"SMTP_PASSWORD"`
 	CaptchaExpiryMinute int    `mapstructure:"CAPTCHA_EXPIRY_MINUTE"`
 }
 
